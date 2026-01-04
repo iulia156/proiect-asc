@@ -1,5 +1,5 @@
 data segment
-	C dd (?)
+	C dw (?)
 	mesaj_afisare db "Valoarea lui C este: $"
 data ends
 code segment
