@@ -7,12 +7,13 @@ code segment
 afisare_hex proc
 	mov cx, 4	; 4 cifre hex
 afis_hex:
-    rol ax, 4; rotim spre stanga ca byte ul cel mai semnificativ sa ajunga in al                  
+    rol ax, cx; rotim spre stanga ca byte ul cel mai semnificativ sa ajunga in al                  
     mov dl, al
     and dl, 0Fh; folosim masca ca sa ramana daor 4 biti
     cmp dl, 9; comparam cu 9 pt a vedea daca este cifra
     jbe cifra
-    add dl, 7; adaugam 7 pentru a putea face conversia(sarim peste cele 7 caractere aflate intre cifre si litere)
+	mov dh, 7
+    add dl, dh; adaugam 7 pentru a putea face conversia(sarim peste cele 7 caractere aflate intre cifre si litere)
 cifra:
     add dl, '0'; adunam codul ascii al lui zero pentru a converti in cifra
     mov ah, 02h; afisam caracterul obtinut
@@ -88,3 +89,4 @@ mov ax, 4C00h
 int 21h
 code ends
 end start
+
