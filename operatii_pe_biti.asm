@@ -7,7 +7,8 @@ code segment
 afisare_hex proc
 	mov cx, 4	; 4 cifre hex
 afis_hex:
-    rol ax, cx; rotim spre stanga ca byte ul cel mai semnificativ sa ajunga in al                  
+	mov dh,4
+    rol ax, dh; rotim spre stanga ca urmatorul grup de 4 biți să ajungă în al              
     mov dl, al
     and dl, 0Fh; folosim masca ca sa ramana daor 4 biti
     cmp dl, 9; comparam cu 9 pt a vedea daca este cifra
