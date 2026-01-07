@@ -50,3 +50,7 @@ Ultima parte a programului se ocupă de rotirea și afișarea octeților din și
 -	Afișarea corectă a reprezentării binare: Afișarea bit cu bit a unui octet a impus gestionarea atentă a Carry Flag, întrucât fiecare deplasare modifica starea acestuia. Soluția a constat în utilizarea instrucțiunilor SHL și ADC pentru a transforma valoarea din CF în caracterele ASCII corespunzătoare (‘0’ și ‘1’).
 
 -	Conversia în format hexazecimal: Conversia valorii octetului în format hexazecimal a necesitat separarea corectă a celor două semiocteți și maparea valorilor peste 9 la literele A–F. Această problemă a fost rezolvată prin ajustarea codului ASCII, obținând o afișare corectă și lizibilă.
+
+## Diagrama bloc
+![Diagrama](diagrama_bloc.png)
+
