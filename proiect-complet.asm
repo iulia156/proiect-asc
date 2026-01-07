@@ -58,6 +58,7 @@ start:
     mov ds, ax
     mov es, ax    
 
+    ; conversie
     mov ah, 09h
     mov dx, offset mesaj
     int 21h
@@ -152,7 +153,8 @@ repeta8_15:
     mov ax, C
     call afisare_hex
 
-    ; bubble sort descrescator    
+    ; bubble sort descrescator
+    
     mov cx, contor_octeti   
     dec cx                  
     cmp cx, 0               
@@ -189,7 +191,7 @@ Gata_Sortare:
     mov dx, offset msg_sortat
     int 21h
 
-    ;analiza bitilor
+    ; analiza bitilor
     mov cx, contor_octeti   
     mov si, 0               
     mov max_bits, 0         
@@ -258,7 +260,7 @@ Nu_Gasit:
     mov dx, offset msg_nu_exista
     int 21h
 
-    ; afisarea sirului sortat
+    ; afisare sir sortat
 Afisare_Sir_Final:
     mov ah, 09h
     mov dx, offset linie_noua
