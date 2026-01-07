@@ -11,12 +11,12 @@ data ends
 
 code segment
 
-;subrutina ce converteste un caracter ascii 
+;subrutina ce converteste un caracter ascii in valoare binara
 ascii_binar proc
 cmp al, '9'       ;verificam daca caracterul este cifra
 jbe cifra        
 cmp al, 'a'       ;verificam daca este litera mica
-jb litera         
+jb litera        
 sub al, 'a'-'A'   ;transformam litera mica in litera mare
 litera:      
 sub al, 7         ;scadem diferenta pentru litere
@@ -60,7 +60,7 @@ mov bl, al            ;salvam temporar in bl
 lodsb                 ;incarcam umatorul caracter in al
 dec cx                ;decrementam manual cx-ul pentru al doilea element procesat in loop
 call ascii_binar      ;apelam procedura
-or al, bl             ;combinam cu prima cifra
+or al, bl             ;combinam cu partea superioara
 
 stosb                 ;salvam elementul in sir
 inc contor_octeti     ;incrementam numarul de octeti salvati
@@ -93,17 +93,17 @@ mov cx, 8              ;pregatim afisarea celor 8 biti
 Repeta_Bit:
 shl al, 1              ;punem bitul in CF
 jc Unu                 ;daca in CF avem 1 mergem la eticheta Unu
-mov dl, '0'            ;daca nu pregatim afisarea lui 0
+mov dl, '0'            ;daca nu, pregatim afisarea lui 0
 jmp Afisare_Bit
 
 Unu:
-mov dl, '1'
+mov dl, '1'            ;pregatim afisarea lui 1
 
 Afisare_Bit:
-push ax                ;salvam al-ul pentru a afisa si ceilalti biti
+push ax                ;salvam ax-ul pe stiva pentru a nu pierde configuratia bitilor din al
 mov ah, 02h            ;functia pentru afisarea unui caracter
 int 21h
-pop ax
+pop ax                 ;restauram ax-ul
 loop Repeta_Bit
 
 ;afisam un spatiu intre octeti
@@ -113,7 +113,7 @@ int 21h
 
 pop cx                 ;restauram cx-ul
 loop Repeta_Octet
-jmp Final              ;sarim peste eroare
+jmp Final              ;sarim peste mesajul de eroare
 
 MesajEroare:
 mov ah, 09h
