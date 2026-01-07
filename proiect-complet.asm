@@ -104,6 +104,45 @@ verificare:
     cmp contor_octeti, 16
     ja MesajEroare
 
+;afisarea octetilor in baza 2
+;adaugam o linie noua
+mov ah, 09h
+mov dx, offset linie_noua
+int 21h
+
+mov si, offset sir     ;octetii salvati
+mov cx, contor_octeti  ;mutam numarul de octeti de afisat in contor
+jcxz Final
+
+Repeta_Octet:
+push cx                ;salvam cx-ul pe stiva 
+lodsb                  ;incarcam octetul curent in al
+    
+mov cx, 8              ;pregatim afisarea celor 8 biti
+Repeta_Bit:
+shl al, 1              ;punem bitul in CF
+jc Unu                 ;daca in CF avem 1 mergem la eticheta Unu
+mov dl, '0'            ;daca nu, pregatim afisarea lui 0
+jmp Afisare_Bit
+
+Unu:
+mov dl, '1'            ;pregatim afisarea lui 1
+
+Afisare_Bit:
+push ax                ;salvam ax-ul pe stiva pentru a nu pierde configuratia bitilor din al
+mov ah, 02h            ;functia pentru afisarea unui caracter
+int 21h
+pop ax                 ;restauram ax-ul
+loop Repeta_Bit
+
+;afisam un spatiu intre octeti
+mov ah, 02h
+mov dl, ' '
+int 21h
+
+pop cx                 ;restauram cx-ul
+loop Repeta_Octet
+
 ;calculam cuvantul C
 
     mov si, offset sir; parcurgem sirul de numere dupa conversia lor
