@@ -1,7 +1,7 @@
 assume cs:code, ds:data
 
 data segment
-    sir db 83h, 0C4h, 33h ;test
+    ;sir db 83h, 0C4h, 33h test
     contor_octeti dw 3
 
     mesaj_binar db 10,13,'Sir dupa rotire (binar):',10,13,'$'
