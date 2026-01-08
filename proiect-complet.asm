@@ -157,7 +157,7 @@ rotire_loop:
     rol al, cl ;rotim octetul cu N pozitii la stanga
 
 skip_rot:
-    mov [si-1], al ;salvam in sir
+    mov [si-1], bl ;salvam in sir
 
     dec cx
     jnz rotire_loop
