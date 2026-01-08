@@ -476,13 +476,6 @@ Afisare_Bit_Final:
     loop Repeta_Octet_Final ;trecem la urmatorul octet din sir
     jmp Final_Program
 
-MesajEroare:
-    mov ah, 09h
-    mov dx, offset eroare
-    int 21h
-
-Final_Program:
-
 ;restabilim nr de octeti
 	mov ax, temp
 	mov contor_octeti, ax
@@ -518,7 +511,12 @@ hex_loop:
 
     call wait_key
 
+MesajEroare:
+    mov ah, 09h
+    mov dx, offset eroare
+    int 21h
 
+Final_Program:
     mov ax, 4C00h
     int 21h
 code ends
