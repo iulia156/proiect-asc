@@ -41,10 +41,9 @@ ascii_binar endp
 
 ;subrutina pentru afisarea lui C
 afisare_hex proc
-    mov cx, 4   ; 4 cifre hex
+    mov cx, 4   ; 4 cifre hexa
 afis_hex:
-    mov dh,4
-    rol ax, dh  ; rotim spre stanga ca urmatorul grup de 4 biți să ajungă în al              
+    rol ax, 4  ; rotim spre stanga ca urmatorul grup de 4 biți să ajungă în al              
     mov dl, al
     and dl, 0Fh ; folosim masca ca sa ramana daor 4 biti
     cmp dl, 9   ; comparam cu 9 pt a vedea daca este cifra
@@ -266,53 +265,47 @@ loop Repeta_Octet
     mov si, offset sir; parcurgem sirul de numere dupa conversia lor
     mov bx, 0; in bx vom afla cuvantul C final
 
-    ;bitii 0-3
+;bitii 0-3
 
-    lodsb
-    and al, 11110000b; in ax avem primii 4 biti ai primului octet
-    mov cl, [sir+contor_octeti-1]; cum si a crescut dupa instructiunea lodsb, folosim sir, care se refera la offset ul sirului
-    and cl, 00001111b; in bx avem ultimii 4 biti ai ultimului octet
-    mov dl, 4
-    rol al, dl; am mutat bitii lui ax pe locurile corespunzatoare
-    xor al, cl
-    mov ah,0
-    or bx, ax; putem face aceatsa operatie deoarece pe bitii 0-3 din ax sunt bitii ceruti iar pe celelalte pozitii este 0, care nu modfica rezultatul
+lodsb
+and al, 00001111b; in ax avem primii 4 biti ai primului octet
+mov cl, [sir+temp-1]; cum si a crescut dupa instructiunea lodsb, folosim sir, care se refera la offset ul sirului
+and cl, 11110000b; in cl avem ultimii 4 biti ai ultimului octet
+shr cl, 4; am mutat bitii lui cl pe locurile corespunzatoare
+xor al, cl
+mov ah,0
+or bx, ax; putem face aceatsa operatie deoarece pe bitii 0-3 din ax sunt bitii ceruti iar pe celelalte pozitii este 0, care nu modfica rezultatul
 
     ;bitii 4-7
 
     mov si, offset sir; parcurgem sirul de numere dupa conversia lor
-    mov cx, contor_octeti
+    mov cx, temp
     mov dl,0
     jcxz Final_Program
 repeta4_7:
-    lodsb
-    and al,00111100b
-    or dl, al
-    loop repeta4_7
-    
-    mov dh,0
-    mov cx,2
-    shl dl,2; deplasam la stanga pentru ca rezultatul sa fie pe pozitiile corecte
-    or bx, dx; punem rezultatul in bx
-    mov C, bx
+	lodsb
+	and al,00111100b
+	or dl, al
+loop repeta4_7
+mov dh,0
+shl dl,2; deplasam la stanga pentru ca rezultatul sa fie pe pozitiile corecte
+or bx, dx; punem rezultatul in bx
 
-    ;bitii 8-15
-    mov si, offset sir; parcurgem sirul de numere dupa conversia lor
-    mov cx, contor_octeti
-    mov dl,0
-    jcxz Final_Program
+
+;bitii 8-15
+mov si, offset sir; parcurgem sirul de numere dupa conversia lor
+mov cx, temp
+mov dl,0
+jcxz Final
 repeta8_15:
-    lodsb
-    add dl,al;  modulo 256 este automat cand folosim un registru de 8 biți pentru că overflow-ul se taie la 8 biți
-    loop repeta8_15
-    
-    mov dh, dl; punem rezultatul in dh pentru a fi pe pozitiile corecte
-    mov dl,0
-    or bx, dx
-    mov C, bx
-
-    ;afisam C
-
+	lodsb
+	add dl,al;  modulo 256 este automat cand folosim un registru de 8 biți pentru că overflow-ul se taie la 8 biți
+loop repeta8_15
+mov dh, dl; punem rezultatul in dh pentru a fi pe pozitiile corecte
+mov dl,0
+or bx, dx
+; afisam C
+  mov C, bx
     mov ah, 09h
     mov dx, offset mesaj_afisare
     int 21h
