@@ -52,5 +52,5 @@ Ultima parte a programului se ocupă de rotirea și afișarea octeților din și
 -	Conversia în format hexazecimal: Conversia valorii octetului în format hexazecimal a necesitat separarea corectă a celor două semiocteți și maparea valorilor peste 9 la literele A–F. Această problemă a fost rezolvată prin ajustarea codului ASCII, obținând o afișare corectă și lizibilă.
 
 ## Diagrama bloc
-![Diagrama](diagrama_bloc_finala.png)
+![Diagrama](diagrama_bloc.png)
 
