@@ -151,11 +151,10 @@ mov bx, 0; in bx vom afla cuvantul C final
 ;bitii 0-3
 
 lodsb
-and al, 11110000b; in ax avem primii 4 biti ai primului octet
+and al, 00001111b; in ax avem primii 4 biti ai primului octet
 mov cl, [sir+contor_octeti-1]; cum si a crescut dupa instructiunea lodsb, folosim sir, care se refera la offset ul sirului
-and cl, 00001111b; in bx avem ultimii 4 biti ai ultimului octet
-mov dl, 4
-rol al, dl; am mutat bitii lui ax pe locurile corespunzatoare
+and cl, 11110000b; in bx avem ultimii 4 biti ai ultimului octet
+shr cl, 4; am mutat bitii lui ax pe locurile corespunzatoare
 xor al, cl
 mov ah,0
 or bx, ax; putem face aceatsa operatie deoarece pe bitii 0-3 din ax sunt bitii ceruti iar pe celelalte pozitii este 0, care nu modfica rezultatul
@@ -172,7 +171,6 @@ repeta4_7:
 	or dl, al
 loop repeta4_7
 mov dh,0
-mov cx,2
 shl dl,2; deplasam la stanga pentru ca rezultatul sa fie pe pozitiile corecte
 or bx, dx; punem rezultatul in bx
 mov C, bx
@@ -188,7 +186,6 @@ repeta8_15:
 loop repeta8_15
 mov dh, dl; punem rezultatul in dh pentru a fi pe pozitiile corecte
 mov dl,0
-
 or bx, dx
 
 ;afisam C
